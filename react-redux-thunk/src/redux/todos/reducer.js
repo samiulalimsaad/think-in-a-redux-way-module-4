@@ -4,28 +4,20 @@ import {
     CLEAR_COMPLETED,
     COLOR_SELECTED,
     DELETED,
+    LOADED,
     TOGGLED,
 } from "./actionTypes";
 
-const initialState = [
-    {
-        id: 1,
-        text: "Lear React JS",
-        completed: true,
-    },
-    {
-        id: 2,
-        text: "Lear Redux",
-        completed: false,
-        color: "red",
-    },
-];
+const initialState = [];
 
 const nextId = (state) =>
     state.reduce((id, obj) => Math.max(id, obj.id), -1) + 1;
 
 export const todoReducer = (state = initialState, action) => {
     switch (action.type) {
+        case LOADED:
+            return action.payload.todos;
+
         case ADDED:
             return [
                 ...state,
