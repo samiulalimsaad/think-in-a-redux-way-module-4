@@ -1,4 +1,5 @@
 const { default: fetch } = require("node-fetch");
+const { fetchTodos } = require("./functions");
 
 exports.delayActionMiddleware = (store) => (next) => (action) => {
     if (action.type === "todo/added") {
@@ -11,16 +12,9 @@ exports.delayActionMiddleware = (store) => (next) => (action) => {
     return next(action);
 };
 
-exports.fetchFromServer = (store) => (next) => async (action) => {
-    if (action.type === "todo/fetch") {
-        console.log("i'm delaying fro server response");
-        const res = await fetch(
-            "https://jsonplaceholder.typicode.com/todos?_limit=5"
-        );
-        const todos = await res.json();
-
-        store.dispatch({ type: "todo/loaded", payload: { todos } });
-        return;
+exports.fetchFromServer = (store) => (next) => (action) => {
+    if (typeof action === "function") {
+        return action(store.dispatch, store.getState);
     }
     return next(action);
 };
