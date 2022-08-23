@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import CancelImage from "../../assets/images/cancel.png";
-import { DeleteTodo } from "../../redux/todos/actions";
+import { deleteTodoServer } from "../../redux/todos/thunk/deleteTodo";
 import { updateColorServer } from "../../redux/todos/thunk/updateColor";
 import { updateTodoServer } from "../../redux/todos/thunk/updateStatus";
 
@@ -18,7 +18,7 @@ const SingleTodo = ({ todo }) => {
     };
 
     const handleDelete = () => {
-        dispatch(DeleteTodo(id));
+        dispatch(deleteTodoServer(id));
     };
 
     return (
